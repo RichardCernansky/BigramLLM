@@ -1,6 +1,8 @@
 //
 // Created by Richard Cernansky on 20/08/2024.
 //
+#include <math.h>
+
 constexpr int BLOCK_SIZE = 8;
 constexpr int BATCH_SIZE = 4;
 constexpr int MAX_ITERS = 10000;

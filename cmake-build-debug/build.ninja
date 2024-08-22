@@ -84,13 +84,6 @@ build CMakeFiles/BigramLLM.dir/BigramLanguageModel.cpp.o: CXX_COMPILER__BigramLL
   OBJECT_DIR = CMakeFiles/BigramLLM.dir
   OBJECT_FILE_DIR = CMakeFiles/BigramLLM.dir
 
-build CMakeFiles/BigramLLM.dir/temp.cpp.o: CXX_COMPILER__BigramLLM_unscanned_Debug /Users/richcern/Desktop/BigramLLM/temp.cpp || cmake_object_order_depends_target_BigramLLM
-  DEP_FILE = CMakeFiles/BigramLLM.dir/temp.cpp.o.d
-  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
-  INCLUDES = -I/Users/richcern/Library/eigen
-  OBJECT_DIR = CMakeFiles/BigramLLM.dir
-  OBJECT_FILE_DIR = CMakeFiles/BigramLLM.dir
-
 build CMakeFiles/BigramLLM.dir/utils.cpp.o: CXX_COMPILER__BigramLLM_unscanned_Debug /Users/richcern/Desktop/BigramLLM/utils.cpp || cmake_object_order_depends_target_BigramLLM
   DEP_FILE = CMakeFiles/BigramLLM.dir/utils.cpp.o.d
   FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
@@ -106,7 +99,7 @@ build CMakeFiles/BigramLLM.dir/utils.cpp.o: CXX_COMPILER__BigramLLM_unscanned_De
 #############################################
 # Link the executable BigramLLM
 
-build BigramLLM: CXX_EXECUTABLE_LINKER__BigramLLM_Debug CMakeFiles/BigramLLM.dir/main.cpp.o CMakeFiles/BigramLLM.dir/BiMap.cpp.o CMakeFiles/BigramLLM.dir/EmbeddingTable.cpp.o CMakeFiles/BigramLLM.dir/config.cpp.o CMakeFiles/BigramLLM.dir/BigramLanguageModel.cpp.o CMakeFiles/BigramLLM.dir/temp.cpp.o CMakeFiles/BigramLLM.dir/utils.cpp.o
+build BigramLLM: CXX_EXECUTABLE_LINKER__BigramLLM_Debug CMakeFiles/BigramLLM.dir/main.cpp.o CMakeFiles/BigramLLM.dir/BiMap.cpp.o CMakeFiles/BigramLLM.dir/EmbeddingTable.cpp.o CMakeFiles/BigramLLM.dir/config.cpp.o CMakeFiles/BigramLLM.dir/BigramLanguageModel.cpp.o CMakeFiles/BigramLLM.dir/utils.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/BigramLLM.dir
   POST_BUILD = :

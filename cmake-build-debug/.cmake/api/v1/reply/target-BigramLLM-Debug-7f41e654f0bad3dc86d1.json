@@ -68,8 +68,7 @@
 				2,
 				3,
 				4,
-				5,
-				6
+				5
 			]
 		}
 	],
@@ -107,8 +106,7 @@
 				2,
 				3,
 				4,
-				5,
-				6
+				5
 			]
 		}
 	],
@@ -142,12 +140,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "BigramLanguageModel.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "temp.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
