@@ -10,6 +10,10 @@ add_executable(BigramLLM main.cpp
         main.cpp
         BiMap.cpp
         EmbeddingTable.cpp
-        config.cpp
         BigramLanguageModel.cpp
-        utils.cpp)
+        utils.cpp
+        utils.h
+        BigramLanguageModel.h
+        EmbeddingTable.h
+        BiMap.h
+        config.h)

@@ -1,11 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <set>
-#include <string>
-#include "BiMap.cpp"
-#include "config.cpp"
-#include "utils.cpp"
-#include "BigramLanguageModel.cpp"
+#include "config.h"
+#include "BigramLanguageModel.h"
+#include "utils.h"
 // find . -name "*.cpp" -not -path "./cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/CMakeCXXCompilerId.cpp" -exec wc -l {} +
 
 

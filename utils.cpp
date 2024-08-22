@@ -1,13 +1,13 @@
 //
 // Created by Richard Cernansky on 22/08/2024.
 //
+#include "utils.h"
+#include <unsupported/Eigen/CXX11/Tensor>
+#include "BiMap.h"
+#include "config.h"
 #include <iostream>
 #include <fstream>
-#include <random>
 #include <set>
-#include <string>
-#include <__random/random_device.h>
-#include <unsupported/Eigen/CXX11/Tensor>
 
 Eigen::MatrixXi
 map_chars_to_idxs(Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> input_data, const BiMap& charsHashed) {
