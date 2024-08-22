@@ -12,4 +12,5 @@ add_executable(BigramLLM main.cpp
         EmbeddingTable.cpp
         config.cpp
         BigramLanguageModel.cpp
-        temp.cpp)
+        temp.cpp
+        utils.cpp)

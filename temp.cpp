@@ -8,8 +8,8 @@
 
 class BigramLanguageModel {
 public:
-    BigramLanguageModel(int vocab_size, int embedding_dim, BiMap& char_to_idx)
-        : vocab_size(vocab_size),
+    BigramLanguageModel(int vocab_size, int embedding_dim, BiMap& char_to_idx) :
+    vocab_size(vocab_size),
           embedding_dim(embedding_dim),
           char_to_idx(char_to_idx),
           idx_to_char(char_to_idx.reverseMap()), // Assuming BiMap has a reverseMap() function

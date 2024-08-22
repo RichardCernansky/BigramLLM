@@ -4,8 +4,6 @@
 #include <Eigen/Dense>
 #include <unsupported/Eigen/CXX11/Tensor>
 #include "EmbeddingTable.cpp"
-#include "BiMap.cpp"
-#include "config.cpp"
 
 class BigramLanguageModel {
 public:
@@ -64,7 +62,7 @@ public:
     }
 
     [[nodiscard]] double
-    cross_entropy_loss(const Eigen::Tensor<double, 3>& logits, const Eigen::MatrixXi& targets) const {
+    cross_entropy_loss(const Eigen::Tensor<double, 3>& logits, const Eigen::MatrixXi& target_indices) const {
         int batch_size = logits.dimension(0);
         int block_size = logits.dimension(1);
         int vocab_size = logits.dimension(2);
@@ -76,7 +74,7 @@ public:
         double loss = 0.0;
         for (int i = 0; i < batch_size; ++i) {
             for (int j = 0; j < block_size; ++j) {
-                int target_idx = targets(i, j);
+                int target_idx = target_indices(i, j);
                 loss -= std::log(probs(i, j, target_idx)); //get only the value only for the correct one
                 //-> -sum[y*P(i)] -> inner is 1 only for the correct one and others IGNORE
             }
@@ -87,7 +85,7 @@ public:
     }
 
     void
-    backward(const Eigen::MatrixXi& input_indices, const Eigen::MatrixXi& targets, const Eigen::Tensor<double, 3>& logits) {
+    backward(const Eigen::MatrixXi& input_indices, const Eigen::MatrixXi& target_indices, const Eigen::Tensor<double, 3>& logits) {
         int batch_size = logits.dimension(0);
         int block_size = logits.dimension(1);
         int vocab_size = logits.dimension(2);
@@ -124,27 +122,26 @@ public:
         for (int i = 0; i < vocab_size; ++i) {
             embedding_table.update_embedding(0, dE.row(0));
         }
-
     }
 
 
+    BiMap charsHashed;
 private:
     EmbeddingTable embedding_table;
-    BiMap charsHashed;
     int vocab_size;
     int embedding_dim;
     Eigen::MatrixXd weights;    // Weight matrix for bigram prediction
 
     // Softmax function
-    Eigen::MatrixXd
-    softmax(const Eigen::MatrixXd& logits) const {
+    [[nodiscard]] static Eigen::MatrixXd
+    softmax(const Eigen::MatrixXd& logits) {
         Eigen::MatrixXd exp_logits = logits.array().exp();
         Eigen::VectorXd sum_exp = exp_logits.rowwise().sum();
         return exp_logits.array().colwise() / sum_exp.array();
     }
 
-    [[nodiscard]] Eigen::Tensor<double, 3>
-    get_probs(const Eigen::Tensor<double, 3>& logits) const {
+    [[nodiscard]] static Eigen::Tensor<double, 3>
+    get_probs(const Eigen::Tensor<double, 3>& logits) {
         int batch_size = logits.dimension(0);
         int block_size = logits.dimension(1);
         int vocab_size = logits.dimension(2);
