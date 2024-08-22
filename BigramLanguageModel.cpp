@@ -14,7 +14,8 @@ public:
         vocab_size(vocab_size),
         embedding_dim(embedding_dim),
         charsHashed(charsHashed),
-        embedding_table(vocab_size, embedding_dim)
+        embedding_table(vocab_size, embedding_dim),
+        weights(embedding_dim, vocab_size)
     {}
 
     [[nodiscard]] Eigen::Tensor<double, 3>
@@ -96,9 +97,7 @@ public:
 
         // Initialize matrices to accumulate gradients with respect to the weights and embeddings
         Eigen::MatrixXd dW = Eigen::MatrixXd::Zero(embedding_dim, vocab_size);  // Gradient for weights, set to zero
-        Eigen::Tensor<double, 3> dE = Eigen::Tensor<double, 3>(batch_size, block_size, embedding_dim);  // Gradient for embeddings
-        dE.setZero(); //set everything to zero
-
+        Eigen::MatrixXd dE = Eigen::MatrixXd::Zero(vocab_size, embedding_dim);  // Gradient for embeddings
 
         //Gradient computation
         for(int i = 0; i < batch_size; ++i) {
@@ -113,12 +112,20 @@ public:
                 //retrieve the embedding for current i,j position
                 Eigen::VectorXd orig_embedding = embedding_table.get_embedding(input_indices(i,j));
                 //update dW for weights:
-                dW += orig_embedding.transpose() * grad_logits;
+                dW += orig_embedding * grad_logits.transpose();
 
+                // Update dE for embeddings: accumulate the gradient for the embedding of the word at input_indices(i, j)
+                dE.row(input_indices(i,j)) += grad_logits.transpose() * weights.transpose();
             }
         }
-    }
 
+        //Update weights and embeddings
+        weights -= LEARNING_RATE * dW;
+        for (int i = 0; i < vocab_size; ++i) {
+            embedding_table.update_embedding(0, dE.row(0));
+        }
+
+    }
 
 
 private:
@@ -165,7 +172,6 @@ private:
         }
         return probs;
     }
-
 
 
 };
