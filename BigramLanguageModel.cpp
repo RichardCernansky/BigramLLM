@@ -7,6 +7,8 @@
 #include "EmbeddingTable.h"
 #include "config.h"
 #include "BiMap.h"
+#include "utils.h"
+
 
 //__init__
 BigramLanguageModel::BigramLanguageModel(const int vocab_size, const int embedding_dim, const BiMap&& charsHashed) :
@@ -15,7 +17,13 @@ BigramLanguageModel::BigramLanguageModel(const int vocab_size, const int embeddi
     charsHashed(charsHashed),
     embedding_table(vocab_size, embedding_dim),
     weights(embedding_dim, vocab_size)
-{}
+{
+    for (int i = 0; i < embedding_dim; ++i) {
+        for (int j = 0; j < vocab_size; ++j) {
+            weights(i, j) = generate_random_real(-0.01, 0.01);
+        }
+    }
+}
 
 [[nodiscard]] Eigen::Tensor<double, 3>
 BigramLanguageModel::forward(const Eigen::MatrixXi& input_indices) const {
@@ -69,7 +77,7 @@ BigramLanguageModel::cross_entropy_loss(const Eigen::Tensor<double, 3>& logits, 
     int vocab_size = logits.dimension(2);
 
     // Initialize a tensor to hold the softmax probabilities
-    Eigen::Tensor<double, 3> probs = get_probs(logits);
+    auto probs = get_probs(logits);
 
     // Compute the cross-entropy loss
     double loss = 0.0;

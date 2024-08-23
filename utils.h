@@ -33,5 +33,7 @@ BiMap getCharsHashed(const std::set<char> &charSet);
 // Function to get the set of characters from a file
 std::set<char> getFileCharSet(const std::string &file_path);
 
+double generate_random_real(double a, double b);
+
 #endif // UTILS_H
 

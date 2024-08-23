@@ -101,3 +101,15 @@ getFileCharSet(const std::string &file_path) {
 
     return charSet;
 }
+
+double generate_random_real(double a, double b) {
+    // Create a random device and a Mersenne Twister random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Create a distribution to generate real numbers between a and b
+    std::uniform_real_distribution<> dis(a, b);
+
+    // Generate and return the random number
+    return dis(gen);
+}

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <Eigen/Dense>
 #include "config.h"
 #include "BigramLanguageModel.h"
 #include "utils.h"
@@ -15,11 +16,16 @@ train(const std::string_view train_data, BigramLanguageModel&& blm) {
         //map into indices numbers
         auto input_indices = map_chars_to_idxs(input_data, blm.charsHashed);
         auto target_indices = map_chars_to_idxs(target_data, blm.charsHashed);
+        //blm.charsHashed.decode_matrix(input_indices);
+        // std::cout << input_indices ;
+        // return blm;
 
         //train process
         auto logits = blm.forward(input_indices);
         auto loss = blm.cross_entropy_loss(logits, target_indices);
-        std::cout << 'Epoch: ' << epoch << 'Loss: ' << loss;
+        std::cout << "Epoch: " << epoch << " Loss: " << loss << std::endl;
+
+        //backward pass
         blm.backward(input_indices, target_indices, logits);
     }
 

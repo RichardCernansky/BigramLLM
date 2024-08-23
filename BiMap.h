@@ -6,6 +6,8 @@
 #define BIMAP_H
 
 #include <unordered_map>
+#include <Eigen/Dense>
+#include "config.h"
 
 class BiMap {
 public:
@@ -18,8 +20,11 @@ public:
     // Get key by value
     [[nodiscard]] char get_key(const int value) const;
 
-    std::unordered_map<char, int> key_to_value;  // Maps integers to characters
+    [[nodiscard]] Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE>
+    decode_matrix(const Eigen::MatrixXi& int_matrix) const;
+
 private:
+    std::unordered_map<char, int> key_to_value;  // Maps integers to characters
     std::unordered_map<int, char> value_to_key;  // Maps characters to integers
 };
 
