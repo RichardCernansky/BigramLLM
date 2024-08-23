@@ -10,7 +10,7 @@
 #include <set>
 
 Eigen::MatrixXi
-map_chars_to_idxs(Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> input_data, const BiMap& charsHashed) {
+map_chars_to_idxs(Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE> input_data, const BiMap& charsHashed) {
     Eigen::MatrixXi chars_to_idxs(BATCH_SIZE, BLOCK_SIZE);
     for (int i = 0; i < BATCH_SIZE; ++i) {
         for (int j = 0; j < BLOCK_SIZE; ++j) {
@@ -31,12 +31,12 @@ generate_random_int(const int a, const int b) {
     return dis(gen);
 }
 
-std::pair<Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic>, Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic>>
+std::pair<Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE>, Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE>>
 get_batch(const std::string_view data) {
 
     // Create matrices to hold the batches
-    Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> input_matrix(BLOCK_SIZE, BATCH_SIZE);
-    Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> target_matrix(BLOCK_SIZE, BATCH_SIZE);
+    Eigen::Matrix<char,BATCH_SIZE, BLOCK_SIZE> input_matrix;
+    Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE> target_matrix;
 
     // Random number generation setup
     std::random_device rd;
@@ -50,8 +50,8 @@ get_batch(const std::string_view data) {
 
         // Copy the data from the string to the matrices
         for (std::size_t j = 0; j < BLOCK_SIZE; ++j) {
-            input_matrix(j, i) = data[start_index + j];
-            target_matrix(j, i) = data[start_index + j + 1]; // Predict the next character
+            input_matrix(i, j) = data[start_index + j];
+            target_matrix(i, j) = data[start_index + j + 1]; // Predict the next character
         }
     }
 
@@ -72,11 +72,11 @@ loadFileToString(const std::string& file_path) {
 }
 
 BiMap
-getCharsHashed(const std::set<char>& charSet) {
+getCharsHashed(const std::set<char> &charSet) {
     BiMap bimap;
     int idx = 0;
-    for (char iter : charSet) {
-       bimap.insert(idx, iter);
+    for (char ch: charSet) {
+       bimap.insert(ch, idx);
        ++idx;
     }
 
@@ -84,7 +84,7 @@ getCharsHashed(const std::set<char>& charSet) {
 }
 
 std::set<char>
-getFileCharSet(const std::string& file_path) {
+getFileCharSet(const std::string &file_path) {
     //open file
     std::ifstream fileHandle(file_path);
     if (!fileHandle) {
@@ -95,7 +95,7 @@ getFileCharSet(const std::string& file_path) {
     char ch;
     // Insert each character into the set
     while (fileHandle.get(ch)) {
-        charSet.insert(ch);
+        charSet.insert(static_cast<unsigned char>(ch));
     }
     fileHandle.close();
 

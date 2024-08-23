@@ -12,25 +12,26 @@
 #include <set>
 #include <random>
 #include "BiMap.h"
+#include "config.h"
 
 // Function to map characters to indices
-Eigen::MatrixXi map_chars_to_idxs(Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic> input_data, const BiMap& charsHashed);
+Eigen::MatrixXi map_chars_to_idxs(Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE> input_data, const BiMap& charsHashed);
 
 // Function to generate a random integer between a and b
 int generate_random_int(const int a, const int b);
 
 // Function to get a batch of input and target matrices from the data
-std::pair<Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic>, Eigen::Matrix<char, Eigen::Dynamic, Eigen::Dynamic>>
+std::pair<Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE>, Eigen::Matrix<char, BATCH_SIZE, BLOCK_SIZE>>
 get_batch(const std::string_view data);
 
 // Function to load a file into a string
 std::string loadFileToString(const std::string& file_path);
 
 // Function to create a BiMap from a set of characters
-BiMap getCharsHashed(const std::set<char>& charSet);
+BiMap getCharsHashed(const std::set<char> &charSet);
 
 // Function to get the set of characters from a file
-std::set<char> getFileCharSet(const std::string& file_path);
+std::set<char> getFileCharSet(const std::string &file_path);
 
 #endif // UTILS_H
 

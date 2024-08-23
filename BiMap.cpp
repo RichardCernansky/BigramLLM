@@ -6,14 +6,14 @@
 
 
 void
-BiMap::insert(const int key, const char& value) {
+BiMap::insert(const char key, const int value) {
     key_to_value[key] = value;
     value_to_key[value] = key;
 }
 
 // Get value by key
 [[nodiscard]] int
-BiMap::get_value(const char& key) const {
+BiMap::get_value(const char key) const {
     auto it = key_to_value.find(key);
     if (it != key_to_value.end()) {
         return it->second;

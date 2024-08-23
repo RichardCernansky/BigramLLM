@@ -4,8 +4,7 @@
 #include "config.h"
 #include "BigramLanguageModel.h"
 #include "utils.h"
-// find . -name "*.cpp" -not -path "./cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/CMakeCXXCompilerId.cpp" -exec wc -l {} +
-
+// find . \( -name "*.cpp" -o -name "*.h" \) -not -path "./cmake-build-debug/CMakeFiles/3.28.1/CompilerIdCXX/CMakeCXXCompilerId.cpp" -exec wc -l {} +
 
 BigramLanguageModel
 train(const std::string_view train_data, BigramLanguageModel&& blm) {
@@ -38,6 +37,7 @@ main() {
     const auto train_size = fileString.size() * TRAIN_SIZE_PERCENTAGE / 100;
 
     BiMap charsHashed = getCharsHashed(charSet);
+
     std::string_view train_data(fileString.data(), train_size);
     std::string_view validation_data(fileString.data() + train_size);
 
